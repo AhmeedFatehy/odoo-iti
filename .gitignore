@@ -49,3 +49,10 @@ package.json
 /man/
 /share/
 /src/
+
+
+# Odoo data and logs
+*.log
+*.pot
+/addons/
+/odoo/
