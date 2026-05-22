@@ -55,4 +55,4 @@ package.json
 *.log
 *.pot
 /addons/
-/odoo/
+odoo/
