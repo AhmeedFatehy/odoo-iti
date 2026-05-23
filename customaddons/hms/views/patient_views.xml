@@ -11,6 +11,12 @@
                 <field name="age"/>
                 <field name="blood_type"/>
                 <field name="pcr"/>
+                <field name="cr_ratio" required="pcr"/>
+                <field name="department_id"/>
+                <field name="department_capacity" readonly="1"/>
+                <field name="doctor_ids" widget="many2many_tags"/>
+                <field name="state"/>
+                <field name="history" invisible="age > 50"/>
             </list>
         </field>
     </record>
@@ -30,6 +36,10 @@
                             <field name="blood_type"/>
                             <field name="pcr"/>
                             <field name="cr_ratio"/>
+                            <field name="department_id"/>
+                            <field name="department_capacity" readonly="1"/>
+                            <field name="doctor_ids" widget="many2many_tags" readonly="not department_id"/>
+                            <field name="state"/>
                         </group>
 
                         <group>
