@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_report_patient_status" model="ir.actions.report">
+        <field name="name">Patient Status Report</field>
+        <field name="model">hms.patient</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hms.patient_status_report_template</field>
+        <field name="report_file">hms.patient_status_report_template</field>
+        <field name="print_report_name">'Patient Report - %s' % (object.name)</field>
+    </record>
+
+    <template id="patient_status_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+
+                    <div class="page" style="border: 3px solid #1565c0; padding: 30px; background: #f3f3f3; min-height: 1000px;">
+
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <h1 style="color: #e53935; font-size: 42px; font-weight: bold; margin: 0;">
+                                    Patient Status Report
+                                </h1>
+                            </div>
+                            <div class="col-4 text-end">
+                                <img t-if="o.image"
+                                     t-att-src="image_data_uri(o.image)"
+                                     style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #ccc;"/>
+                            </div>
+                        </div>
+
+                        <br/><br/>
+
+                        <div class="row" style="font-size: 20px;">
+                            <div class="col-6">
+                                <p>
+                                    <strong>Name:</strong>
+                                    <span t-out="((o.first_name or '') + ' ' + (o.last_name or ''))"/>
+                                </p>
+                                <p>
+                                    <strong>Age:</strong>
+                                    <span t-field="o.age"/>
+                                </p>
+                                <p>
+                                    <strong>Department:</strong>
+                                    <span t-field="o.department_id"/>
+                                </p>
+                                <p>
+                                    <strong>Doctors:</strong>
+                                    <t t-foreach="o.doctor_ids" t-as="doctor">
+                                        <span t-field="doctor.name"/>
+                                        <t t-if="not doctor == o.doctor_ids[-1]">, </t>
+                                    </t>
+                                </p>
+                            </div>
+
+                            <div class="col-6">
+                                <p>
+                                    <strong>Birth Date:</strong>
+                                    <span t-field="o.birth_date"/>
+                                </p>
+                                <p>
+                                    <strong>PCR:</strong>
+                                    <span t-field="o.pcr"/>
+                                </p>
+                                <p>
+                                    <strong>Blood Type:</strong>
+                                    <span t-field="o.blood_type"/>
+                                </p>
+                                <p>
+                                    <strong>Email:</strong>
+                                    <span t-field="o.email"/>
+                                </p>
+                            </div>
+                        </div>
+
+                        <br/><br/>
+
+                        <h2 style="text-align: center; color: #e53935; font-weight: bold; margin-bottom: 20px;">
+                            Log History
+                        </h2>
+
+                        <table class="table table-bordered" style="width: 100%; font-size: 18px; background-color: #ffffff;">
+                            <thead style="background: #1976d2; color: white;">
+                                <tr>
+                                    <th>User</th>
+                                    <th>Date</th>
+                                    <th>Info</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.log_ids" t-as="log">
+                                    <tr>
+                                        <td>
+                                            <span t-field="log.created_by"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="log.date"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="log.description"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

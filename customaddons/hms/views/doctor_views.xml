@@ -44,6 +44,7 @@
               name="Doctors"
               parent="menu_hms_root"
               action="action_hms_doctor"
-              sequence="2"/>
+              sequence="2"
+              groups="hms.group_hms_manager"/>
 
 </odoo>

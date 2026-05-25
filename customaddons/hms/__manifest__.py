@@ -2,8 +2,11 @@
     'name': 'Health Management System',
     'version': '1.0',
     'author': 'Ahmed fathi',
+    'depends': ['base', 'contacts'],
     'data': [
+        'security/security.xml',
         'security/ir.model.access.csv',
+        'reports/patient_report.xml',
         'views/patient_views.xml',
         'views/doctor_views.xml',
         'views/department_views.xml',
@@ -12,7 +15,4 @@
     ],
     'installable': True,
     'application': True,
-    'depends': ['base', 'contacts'],
-    'license': 'LGPL-3',
-    'sequence': 1,
 }

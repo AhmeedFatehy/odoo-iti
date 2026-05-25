@@ -8,6 +8,7 @@ class HMSPatient(models.Model):
     _description = 'HMS Patient'
     _rec_name = 'first_name'
 
+    created_by = fields.Many2one('res.users', string='Created By')
     first_name = fields.Char(string='First Name', required=True)
     last_name = fields.Char(string='Last Name', required=True)
 
@@ -43,7 +44,7 @@ class HMSPatient(models.Model):
     department_id = fields.Many2one('hms.department', string='Department', domain="[('is_opened', '=', True)]")
     department_capacity = fields.Integer(string='Department Capacity', related='department_id.capacity')
     doctor_ids = fields.Many2many('hms.doctor', string='Doctors')
-
+    log_ids = fields.One2many('hms.log', 'patient_id', string="Log History")
     state = fields.Selection([
         ('undetermined', 'Undetermined'),
         ('good', 'Good'),
