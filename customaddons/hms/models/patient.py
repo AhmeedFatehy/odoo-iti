@@ -1,7 +1,8 @@
+import re
+
 from odoo import models, fields, api
 from datetime import date
-
-
+from odoo.exceptions import ValidationError
 class HMSPatient(models.Model):
     _name = 'hms.patient'
     _description = 'HMS Patient'
@@ -51,6 +52,22 @@ class HMSPatient(models.Model):
     ], string='State', default='undetermined')
 
     logs = fields.One2many('hms.log', 'patient_id', string='Logs')
+
+    email = fields.Char(string='Email')
+
+    _email_unique = models.Constraint(
+        'UNIQUE(email)', 
+        'The email must be unique.'
+    )
+    
+    @api.constrains('email')
+    def _check_email(self):
+        email_pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+
+        for rec in self:
+            if rec.email:
+                if not re.match(email_pattern, rec.email):
+                    raise ValidationError("Please enter a valid email address.")
 
     @api.depends('birth_date')
     def _compute_age(self):

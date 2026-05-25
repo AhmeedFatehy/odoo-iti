@@ -17,6 +17,7 @@
                 <field name="doctor_ids" widget="many2many_tags"/>
                 <field name="state"/>
                 <field name="history" invisible="age > 50"/>
+                <field name="email" widget="email"/>
             </list>
         </field>
     </record>
@@ -40,6 +41,8 @@
                             <field name="department_capacity" readonly="1"/>
                             <field name="doctor_ids" widget="many2many_tags" readonly="not department_id"/>
                             <field name="state"/>
+                            <field name="email" widget="email"/>
+
                         </group>
 
                         <group>
